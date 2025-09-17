@@ -8,7 +8,11 @@ const { connectDB } = require("./config/db");
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5176', // your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
 app.use(morgan("dev"));
 
 // Use rawBody for webhook signature validation
