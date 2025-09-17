@@ -8,10 +8,15 @@ const { connectDB } = require("./config/db");
 const app = express();
 
 // Middleware
+
+const allowedOrigins = [
+  "https://visionary-phoenix-academy.vercel.app", // ✅ no trailing slash
+];
+
 app.use(cors({
-  origin: 'https://visionary-phoenix-academy.vercel.app/', // your frontend URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
+  origin: allowedOrigins,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true
 }));
 app.use(morgan("dev"));
 
