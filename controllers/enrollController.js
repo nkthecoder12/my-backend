@@ -3,12 +3,12 @@ const Enrollment = require("../models/Enrollment");
 
 // Course pricing configuration
 const COURSE_PRICES = {
-  "Ethical Hacking": 4000,
-  "Cybersecurity": 3500,
-  "SOC Analyst": 3000,
-  "CCNA": 2500,
-  "Java": 2000,
-  "Python": 2000
+  "Ethical Hacking": 10000,
+  "Cybersecurity":10000 ,
+  "SOC Analyst": 12000,
+  "CCNA": 10000,
+  "Java": 8000,
+  "Python": 8000
 };
 
 const VALID_COURSES = Object.keys(COURSE_PRICES);
