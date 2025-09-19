@@ -10,7 +10,7 @@ const app = express();
 // Middleware
 
 const allowedOrigins = [
-  "https://visionary-phoenix-academy.vercel.app", // ✅ no trailing slash
+  "https://visionary--phoenix-academy.web.app", // ✅ no trailing slash
 ];
 
 app.use(cors({
