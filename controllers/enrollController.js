@@ -5,7 +5,7 @@ const Enrollment = require("../models/Enrollment");
 const COURSE_PRICES = {
   "Ethical Hacking": 10000,
   "Cybersecurity":10000 ,
-  "SOC Analyst": 12000,
+  "SOC Analyst": 1,
   "CCNA": 10000,
   "Java": 8000,
   "Python": 8000
