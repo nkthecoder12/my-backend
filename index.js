@@ -8,16 +8,18 @@ const { connectDB } = require("./config/db");
 const app = express();
 
 // Middleware
+const express = require("express");
+const cors = require("cors");
 
-const allowedOrigins = [
-  "https://visionary--phoenix-academy.web.app", // ✅ no trailing slash
-];
+const app = express();
 
 app.use(cors({
-  origin: allowedOrigins,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  origin: ["https://vpacademy.in", "https://www.vpacademy.in"], 
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
+
+
 app.use(morgan("dev"));
 
 // Use rawBody for webhook signature validation
