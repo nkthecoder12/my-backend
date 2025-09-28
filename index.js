@@ -7,29 +7,21 @@ const { connectDB } = require("./config/db");
 // Initialize Express
 const app = express();
 
-// Middleware
-const express = require("express");
-const cors = require("cors");
-
-const app = express();
-
+// ===== Middleware =====
 app.use(cors({
-  origin: ["https://vpacademy.in", "https://www.vpacademy.in"], 
+  origin: ["https://vpacademy.in", "https://www.vpacademy.in"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
 
-
 app.use(morgan("dev"));
 
-// Use rawBody for webhook signature validation
+// Handle raw body for webhook validation
 app.use((req, res, next) => {
   if (req.originalUrl.startsWith("/api/webhook")) {
     req.setEncoding("utf8");
     let data = "";
-    req.on("data", (chunk) => {
-      data += chunk;
-    });
+    req.on("data", (chunk) => { data += chunk; });
     req.on("end", () => {
       req.rawBody = Buffer.from(data);
       try {
@@ -40,36 +32,25 @@ app.use((req, res, next) => {
       next();
     });
   } else {
-    express.json()(req, res, next);
+    express.json()(req, res, next); // Normal JSON parser
   }
 });
 
-// Connect DB once before handling requests
-let dbReady = false;
-async function ensureDB() {
-  if (!dbReady) {
-    await connectDB();
-    dbReady = true;
-  }
-}
+// ===== DB Connection =====
+connectDB()
+  .then(() => console.log("✅ DB connected"))
+  .catch((err) => {
+    console.error("❌ DB connection failed:", err);
+    process.exit(1); // Exit if DB fails at startup
+  });
 
-app.use(async (req, res, next) => {
-  try {
-    await ensureDB();
-    next();
-  } catch (e) {
-    console.error("DB connection error", e);
-    res.status(500).json({ message: "DB connection failed" });
-  }
-});
-
-// Routes
+// ===== Routes =====
 app.use("/api", require("./routes/enroll"));
 app.use("/api", require("./routes/webhook"));
 
 app.get("/api/health", (req, res) => res.json({ ok: true }));
 
-// Start server
+// ===== Start Server =====
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
